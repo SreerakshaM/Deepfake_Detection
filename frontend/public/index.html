@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition | HUD Interface</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Outfit:wght@200;300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-image"></div>
+    <div class="overlay"></div>
+
+    <header style="position: absolute; top: 20px; right: 10%; z-index: 100;">
+        <div id="user-status" style="display: flex; align-items: center; gap: 20px;">
+            <a href="login.html" id="login-link" class="btn btn-secondary"
+                style="padding: 8px 20px; font-size: 0.8rem;">LOGIN // ACCESS</a>
+            <div id="user-profile" style="display: none; align-items: center; gap: 10px;">
+                <span class="tag" id="username-display">USER // --</span>
+                <a href="profile.html" class="btn btn-primary" style="padding: 5px 15px; font-size: 0.7rem;">PROFILE</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="info-section">
+            <h1 class="main-title">
+                <span class="title-light">FACE</span><br>
+                <span class="title-bold">RECOGNITION</span>
+            </h1>
+            <div class="title-underline"></div>
+
+            <p class="description">
+                Advanced forensic-grade facial scanning and frequency analysis to detect biometric manipulation and
+                deepfake fraud in real-time. Upload an image or video to expose advanced biometric forgeries instantly.
+            </p>
+
+            <div class="actions">
+                <input type="file" id="image-input" hidden accept="image/*">
+                <button class="btn btn-primary" onclick="if(!localStorage.getItem('user')){alert('ACCESS DENIED // Please login to use detection capabilities.'); return false;} document.getElementById('image-input').click()">
+                    DETECT IMAGE
+                </button>
+
+                <input type="file" id="video-input" hidden accept="video/*">
+                <button class="btn btn-secondary" onclick="if(!localStorage.getItem('user')){alert('ACCESS DENIED // Please login to use detection capabilities.'); return false;} document.getElementById('video-input').click()">
+                    DETECT VIDEO
+                </button>
+            </div>
+
+            <div class="analysis-dashboard" id="results" style="display: none;">
+                <div class="result-panel">
+                    <div class="panel-header">
+                        <span class="tag">VERDICT //</span>
+                        <h3 id="label-text">WAITING</h3>
+                    </div>
+                    <div class="verdict-display">
+                        <div class="verdict-value" id="prediction-text">--%</div>
+                        <div class="gauge-container">
+                            <div class="gauge-fill" id="prob-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Image Preview Container on the right -->
+        <div class="preview-section" id="preview-section" style="display: none;">
+            <div class="preview-frame">
+                <img id="user-preview-img" src="" alt="Uploaded Face">
+                <div class="scan-overlay"></div>
+                <div id="data-stream" class="hud-data-stream"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const user = localStorage.getItem('user');
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (user) {
+                document.getElementById('login-link').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'flex';
+                document.getElementById('username-display').innerText = `USER // ${user.toUpperCase()}`;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.reload();
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

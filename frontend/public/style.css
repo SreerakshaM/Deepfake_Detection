@@ -1,0 +1,346 @@
+:root {
+    --bg-base: #020617;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --accent-cyan: #00f2ff;
+    --accent-red: #ff3e6c;
+    --panel-bg: rgba(15, 23, 42, 0.6);
+    --panel-border: rgba(0, 242, 255, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-base);
+    background-image: 
+        url('face_scan.png'),
+        url('thumb_scan.png'),
+        radial-gradient(circle at 15% 50%, rgba(0, 242, 255, 0.08), transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(255, 62, 108, 0.05), transparent 50%),
+        linear-gradient(rgba(0, 242, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.04) 1px, transparent 1px);
+    background-size: 40% auto, 30% auto, 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+    background-position: right 5% bottom 5%, left 5% top 20%, center, center, center, center;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat, repeat;
+    z-index: -3;
+    opacity: 0.5;
+    animation: bgPulse 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+    0% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Replicate the dark left fade for the text seen in the screenshot */
+    background: linear-gradient(90deg,
+            rgba(2, 6, 23, 0.98) 0%,
+            rgba(2, 6, 23, 0.8) 40%,
+            rgba(2, 6, 23, 0.2) 100%);
+    z-index: -2;
+}
+
+.content-wrapper {
+    padding: 0 10%;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.info-section {
+    max-width: 500px;
+    padding: 40px 0;
+}
+
+.main-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1.1;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.title-light {
+    font-weight: 300;
+}
+
+.title-bold {
+    font-weight: 700;
+}
+
+.title-underline {
+    width: 80px;
+    height: 3px;
+    background: var(--accent-cyan);
+    margin-bottom: 30px;
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+.description {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.btn {
+    padding: 12px 24px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: transparent;
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.btn-primary:hover {
+    background: rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--text-main);
+    /* White border as in screenshot */
+    color: var(--text-main);
+    /* White text as in screenshot */
+}
+
+.btn-secondary:hover {
+    background: rgba(248, 250, 252, 0.1);
+    box-shadow: 0 0 20px rgba(248, 250, 252, 0.2);
+}
+
+/* Dashboard */
+.analysis-dashboard {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-panel {
+    background: var(--panel-bg);
+    border-left: 3px solid var(--accent-cyan);
+    padding: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.panel-header {
+    margin-bottom: 20px;
+}
+
+.tag {
+    font-family: monospace;
+    color: var(--accent-cyan);
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.panel-header h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+.verdict-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.gauge-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.gauge-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--accent-cyan);
+    transition: width 1s cubic-bezier(0.1, 0.7, 0.1, 1);
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: 0 5%;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
+
+/* Image Preview */
+.preview-section {
+    position: absolute;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.5s ease-out;
+    z-index: 20;
+}
+
+.preview-frame {
+    position: relative;
+    width: 220px;
+    /* Slightly larger to fit crosshairs */
+    height: 220px;
+    border: 2px solid rgba(0, 242, 255, 0.3);
+    border-radius: 50%;
+    padding: 15px;
+    background: radial-gradient(circle, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.6) 100%);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.2), inset 0 0 20px rgba(0, 242, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Sci-Fi Target Crosshairs */
+.preview-frame::before,
+.preview-frame::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    pointer-events: none;
+}
+
+.preview-frame::before {
+    border-top-color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+    animation: spin 10s linear infinite;
+    opacity: 0.6;
+}
+
+.preview-frame::after {
+    width: 110%;
+    height: 110%;
+    border-left-color: rgba(0, 242, 255, 0.4);
+    border-right-color: rgba(0, 242, 255, 0.4);
+    animation: spin-reverse 15s linear infinite;
+}
+
+#user-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--accent-cyan);
+    opacity: 0.9;
+    box-shadow: 0 0 20px var(--accent-cyan);
+}
+
+.scan-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 242, 255, 0.3) 90deg, transparent 120deg);
+    animation: radar-spin 2s linear infinite;
+    display: none;
+    pointer-events: none;
+    z-index: 5;
+}
+
+@keyframes radar-spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Advanced HUD Data Stream */
+.hud-data-stream {
+    position: absolute;
+    bottom: -20px;
+    right: -100px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    color: var(--accent-cyan);
+    opacity: 0.8;
+    text-shadow: 0 0 5px var(--accent-cyan);
+    line-height: 1.4;
+    pointer-events: none;
+    text-align: left;
+}

@@ -1,0 +1,11 @@
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+*.avi
+sample_videos/
+training/dataset/
+training/demo_samples/
+backend/uploads/
