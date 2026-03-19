@@ -106,8 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
             probFill.style.width = `${displayProb}%`;
 
             // Styling based on result
+            document.getElementById('analysis-details').style.display = 'block';
+            document.getElementById('basis-text').innerText = data.basis || "Numerical analysis of frequency spectrum.";
+            document.getElementById('comparison-text').innerText = data.comparison || "Baseline comparison complete.";
+            document.getElementById('hf-noise-val').innerText = data.metrics?.high_frequency_noise ? data.metrics.high_frequency_noise + '%' : '--';
+            document.getElementById('spectral-energy-val').innerText = data.metrics?.spectral_energy || '--';
+
             if (data.label === 'AI_GENERATED') {
-                labelText.innerText = "FORGERY DETECTED";
+                labelText.innerText = "YY IT IS AI IMAGE";
                 predictionText.style.color = 'var(--accent-red)';
                 probFill.style.background = 'var(--accent-red)';
                 probFill.style.boxShadow = '0 0 10px var(--accent-red)';
@@ -115,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewFrame.style.borderColor = 'var(--accent-red)';
                 previewFrame.style.boxShadow = '0 0 20px rgba(255, 62, 108, 0.2)';
             } else {
-                labelText.innerText = "AUTHENTICATED";
+                labelText.innerText = "YY IT IS REAL";
                 predictionText.style.color = 'var(--accent-cyan)';
                 probFill.style.background = 'var(--accent-cyan)';
                 probFill.style.boxShadow = '0 0 10px var(--accent-cyan)';

@@ -31,6 +31,21 @@ def get_fft_spectrum(image_path, size=(256, 256)):
     # Power spectrum for features
     psd = magnitude_spectrum ** 2
     psd_radial = azimuthal_average(psd)
-    psd_radial = np.log(psd_radial + 1)
     
-    return psd_radial
+    # Metrics for "Basis" explanation
+    # High Frequency Energy Ratio (simple metric for artifacts)
+    cutoff = int(len(psd_radial) * 0.7)
+    high_freq_sum = np.sum(psd_radial[cutoff:])
+    total_energy = np.sum(psd_radial) + 1e-10
+    hf_ratio = (high_freq_sum / total_energy) * 100
+    
+    psd_log = np.log(psd_radial + 1)
+    
+    return {
+        'spectrum': psd_log,
+        'hf_ratio': float(hf_ratio),
+        'metrics': {
+            'high_frequency_noise': round(float(hf_ratio), 2),
+            'spectral_energy': round(float(np.mean(psd_radial)), 2)
+        }
+    }

@@ -63,6 +63,27 @@
                             <div class="gauge-fill" id="prob-fill"></div>
                         </div>
                     </div>
+
+                    <div class="analysis-details" id="analysis-details" style="display: none;">
+                        <div class="detail-item">
+                            <span class="detail-label">DETECTION BASIS // ANALYSIS REASON</span>
+                            <p class="detail-content" id="basis-text">Analyzing spectral fingerprints...</p>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">COMPARATIVE DATA // VS NATURAL</span>
+                            <p class="detail-content" id="comparison-text">Evaluating against baseline metrics...</p>
+                        </div>
+                        <div class="metric-grid">
+                            <div class="metric-box">
+                                <span class="metric-value" id="hf-noise-val">--</span>
+                                <span class="metric-name">HF NOISE</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="metric-value" id="spectral-energy-val">--</span>
+                                <span class="metric-name">ENERGY</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

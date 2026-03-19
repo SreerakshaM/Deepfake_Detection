@@ -40,7 +40,8 @@ def demo():
         cv2.imwrite(path, img)
 
         # Process and predict
-        spectrum = get_fft_spectrum(path)
+        spectrum_data = get_fft_spectrum(path)
+        spectrum = spectrum_data['spectrum']
         features = spectrum.reshape(1, -1)
         
         prob = model.predict_proba(features)[0][1]
