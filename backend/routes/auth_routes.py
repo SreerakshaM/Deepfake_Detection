@@ -1,25 +1,45 @@
+import os
+import json
 from flask import Blueprint, request, jsonify, current_app
 from utils.email_service import send_reset_email
 
 auth_bp = Blueprint('auth', __name__)
 
 # Mock user database
-users = {
-    "admin": "password123",
-    "testuser": {
-        "password": "password456",
-        "email": "test@gmail.com",
-        "phone": "1234567890"
-    },
-    "sreeraksha": {
-        "password": "securepassword789",
-        "email": "sreeraksha452@gmail.com",
-        "phone": "9876543210"
-    }
-}
+USERS_FILE = os.path.join(os.path.dirname(__file__), '..', 'users.json')
+
+def load_users():
+    if not os.path.exists(USERS_FILE):
+        initial_users = {
+            "admin": "password123",
+            "testuser": {
+                "password": "password456",
+                "email": "test@gmail.com",
+                "phone": "1234567890"
+            },
+            "sreeraksha": {
+                "password": "Amulya@20",
+                "email": "sreeraksha452@gmail.com",
+                "phone": "9876543210"
+            }
+        }
+        save_users(initial_users)
+        return initial_users
+    
+    with open(USERS_FILE, 'r') as f:
+        return json.load(f)
+
+def save_users(users_dict):
+    with open(USERS_FILE, 'w') as f:
+        json.dump(users_dict, f, indent=4)
+
+# Global users dictionary (will be synced with file)
+users = load_users()
 
 @auth_bp.route('/api/login', methods=['POST'])
 def login():
+    global users
+    users = load_users() # Refresh from disk in case of external changes
     data = request.json
     email = data.get('email')
     password = data.get('password')
@@ -40,6 +60,8 @@ def login():
 
 @auth_bp.route('/api/signup', methods=['POST'])
 def signup():
+    global users
+    users = load_users()
     data = request.json
     username = data.get('username')
     email = data.get('email')
@@ -54,6 +76,7 @@ def signup():
         'email': email,
         'phone': phone
     }
+    save_users(users)
     return jsonify({'message': 'User created successfully'}), 201
 
 @auth_bp.route('/api/reset-password', methods=['POST'])
@@ -73,9 +96,12 @@ def reset_password():
         return jsonify({'message': 'Invalid or expired reset link. Please request a new one.'}), 400
 
     # Find user by email and update password
+    global users
+    users = load_users()
     for username, user_data in users.items():
         if isinstance(user_data, dict) and user_data.get('email') == email:
             users[username]['password'] = new_password
+            save_users(users)
             return jsonify({'message': 'Password reset successfully'}), 200
 
     return jsonify({'message': 'User not found'}), 404

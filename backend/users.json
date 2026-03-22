@@ -1,0 +1,13 @@
+{
+    "admin": "password123",
+    "testuser": {
+        "password": "password456",
+        "email": "test@gmail.com",
+        "phone": "1234567890"
+    },
+    "sreeraksha": {
+        "password": "Amulya@20",
+        "email": "sreeraksha452@gmail.com",
+        "phone": "9876543210"
+    }
+}
